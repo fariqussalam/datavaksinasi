@@ -1,0 +1,220 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Smash - Bootstrap Business Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png" type="image/png' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/magnific-popup.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/slick.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/LineIcons.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css' ) }}">
+</head>
+
+<body>
+<!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<div class="preloader">
+    <div class="loader">
+        <div class="ytp-spinner">
+            <div class="ytp-spinner-container">
+                <div class="ytp-spinner-rotator">
+                    <div class="ytp-spinner-left">
+                        <div class="ytp-spinner-circle"></div>
+                    </div>
+                    <div class="ytp-spinner-right">
+                        <div class="ytp-spinner-circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="navbar-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg">
+
+                    <a class="navbar-brand" href="#">
+                        Vaksinasi
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo"
+                            aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarTwo">
+                        <ul class="navbar-nav m-auto">
+                            <li class="nav-item active"><a class="page-scroll" href="#home">home</a></li>
+                            <li class="nav-item"><a class="page-scroll" href="#cek-jadwal">Cek Jadwal</a></li>
+                            <li class="nav-item"><a class="page-scroll" href="#tahap-pendaftaran">Tahap Pendaftaran</a>
+                            </li>
+                            <li class="nav-item"><a class="page-scroll" href="#kontak">Kontak</a></li>
+                        </ul>
+                    </div>
+
+
+                </nav> <!-- navbar -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== NAVBAR TWO PART ENDS ======-->
+
+{% block content %}{% endblock %}
+
+  <script id="check-result-template" type="x-tmpl-mustache">
+  {% raw %}
+    <div class="card mb-3">
+    <div class="row m-1 mt-3">
+        <div class="col-sm-9"><h4>Data Diri Peserta Vaksin</h4></div>
+
+        <div class="col-sm-3 float-right">
+            <button type="button" class="close js-result-close">
+                <span style="font-size: 30px;">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">Nama</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+                {{ nama_lengkap }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">NIK</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+                {{ nik }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">Alamat</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+                {{ alamat_ktp }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">No. Telepon</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+                {{ no_hp }}
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">Hari/Tanggal Vaksin</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+            Kamis, 15 Juli 2021
+                {{ hari_vaksin }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">Waktu</h6>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+            Batch 1 (09.00 sd 10.00 WIB)
+                {{ waktu_vaksin }}
+            </div>
+        </div>
+        <hr>
+
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <h6 class="mb-0 text-secondary field-name">Ketentuan Administrasi Peserta Penerima
+                    Vaksin COVID 19</h6>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-1">
+            <div class="col-sm-12 field-text">
+                <ul>
+                    <li>1. Peserta Penerima Vaksin Covid-19 <b>WAJIB</b> menyertakan Fotokopi KTP
+                    </li>
+                    <li>2. Peserta Penerima Vaksin Covid-19 <b>WAJIB</b> membawa printout form
+                        skrining ini (Unduh Form Skrining)
+                    </li>
+                    <li>3. Peserta Penerima Vaksin Covid-19 <b>WAJIB</b> mendaftarkan diri di link
+                        dibawah ini :
+                    </li>
+                    <li><a href="https://pedulilindungi.id/register" target="_blank">pedulilindungi.id/register</a>
+                        dan <a href="http://daftarvaksin.slemankab.go.id"
+                               target="_blank">daftarvaksin.slemankab.go.id</a>
+                    </li>
+                    <li>(Isikan data diri sesuai KTP dan isikan No HP aktif yang bisa sms dan
+                        telepon pulsa)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                    {% endraw %}
+    </script>
+
+<!--====== PART ENDS ======-->
+<!--====== Jquery js ======-->
+<script src="{{ url_for('static', filename='assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/vendor/modernizr-3.7.1.min.js') }}"></script>
+
+<!--====== Bootstrap js ======-->
+<script src="{{ url_for('static', filename='assets/js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+
+
+<!--====== Isotope js ======-->
+<script src="{{ url_for('static', filename='assets/js/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/isotope.pkgd.min.js') }}"></script>
+
+<!--====== Scrolling Nav js ======-->
+<script src="{{ url_for('static', filename='assets/js/jquery.easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/scrolling-nav.js') }}"></script>
+<script src="https://unpkg.com/mustache@4.2.0/mustache.min.js"></script>
+
+<!--====== Main js ======-->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+</body>
+
+</html>
