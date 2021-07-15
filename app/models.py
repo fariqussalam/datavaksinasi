@@ -69,6 +69,7 @@ class PesertaVaksinasi(db.Model):
     tanggal_lahir = db.Column(db.String(140))
     instansi_pekerjaan = db.Column(db.String(140))
     pekerjaan = db.Column(db.String(140))
+    jenis_pekerjaan = db.Column(db.String(140))
     no_hp = db.Column(db.String(140))
     alamat_ktp = db.Column(db.String(140))
     kode_kabupaten = db.Column(db.String(140))

@@ -19,7 +19,7 @@
 
         $('.js-tabel-daftar-peserta').DataTable({
             "ajax": '/backend/api/daftar-peserta',
-            "order": [[1, "desc"]],
+            "order": [[4, "asc"]],
             "lengthChange": false,
             "pageLength": 15,
             "columns": [
@@ -51,7 +51,7 @@
 
         $('.js-tabel-daftar-peserta-unit').DataTable({
             "ajax": '/backend/api/daftar-peserta',
-            "order": [[1, "desc"]],
+            "order": [[4, "asc"]],
             "lengthChange": false,
             "pageLength": 15,
             "columns": [
