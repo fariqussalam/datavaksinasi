@@ -134,30 +134,34 @@
             </div>
         </div>
         <hr>
-        <div class="row mt-5">
+        {{ #hari_vaksin }}
+         <div class="row mt-5">
             <div class="col-sm-12">
                 <h6 class="mb-0 text-secondary field-name">Hari/Tanggal Vaksin</h6>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col-sm-12 field-text">
-            Kamis, 15 Juli 2021
                 {{ hari_vaksin }}
             </div>
         </div>
         <hr>
-        <div class="row">
+        {{ /hari_vaksin }}
+        {{ #batch }}
+          <div class="row">
             <div class="col-sm-12">
                 <h6 class="mb-0 text-secondary field-name">Waktu</h6>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col-sm-12 field-text">
-            Batch 1 (09.00 sd 10.00 WIB)
-                {{ waktu_vaksin }}
+                {{ batch }} ({{ waktu }})
             </div>
         </div>
         <hr>
+        {{ /batch }}
+
+
 
         <div class="row mt-5">
             <div class="col-sm-12">

@@ -47,6 +47,16 @@ class Post(db.Model):
         return '<Post {}>'.format(self.body)
 
 
+class Batch(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(140))
+    waktu = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Batch {}>'.format(self.nama)
+
+
 class PesertaVaksinasi(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(140))

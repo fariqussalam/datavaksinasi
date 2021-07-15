@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User, PesertaVaksinasi, requires_roles
+from app.models import User, PesertaVaksinasi, requires_roles, Batch
 
 
 @app.before_request
@@ -26,12 +26,23 @@ def cek_jadwal():
     peserta = PesertaVaksinasi.query.filter_by(nik=nik).first()
     if peserta is None:
         return jsonify({'success': False, 'message': 'NIK Tidak Terdaftar'})
-    return jsonify({'success': True, 'peserta': {
+
+    batch = peserta.batch
+    batch_upper = batch.upper()
+    db_batch = Batch.query.filter_by(nama=batch_upper).first()
+    response = {'success': True, 'peserta': {
         "nik": peserta.nik,
         "nama_lengkap": peserta.nama_lengkap,
         "alamat_ktp": peserta.alamat_ktp,
-        "no_hp": peserta.no_hp
-    }})
+        "no_hp": peserta.no_hp,
+        "hari_vaksin": peserta.waktu_vaksin
+    }}
+
+    if db_batch is not None:
+        response["peserta"]["batch"] = db_batch.nama
+        response["peserta"]["waktu"] = db_batch.waktu
+
+    return jsonify(response)
 
 
 @app.route('/login', methods=['GET', 'POST'])
