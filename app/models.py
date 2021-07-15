@@ -1,7 +1,8 @@
+from functools import wraps
 from datetime import datetime
 from hashlib import md5
 from app import db, login
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -14,6 +15,7 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     unit_kerja = db.Column(db.String(140))
+    role = db.Column(db.String(140))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -67,6 +69,19 @@ class PesertaVaksinasi(db.Model):
     hadir = db.Column(db.Boolean, default=False)
     umur = db.Column(db.Integer)
     penyelenggara = db.Column(db.String(140))
+    waktu_vaksin = db.Column(db.String(140))
 
     def __repr__(self):
         return '<PesertaVaksinasi {}>'.format(self.nik)
+
+
+def requires_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if current_user.role not in roles:
+                # Redirect the user to an unauthorized notice!
+                return "You are not authorized to access this page"
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
