@@ -1,14 +1,14 @@
-$(function() {
-    
+$(function () {
+
     "use strict";
-    
+
     //===== Prealoder
-    
-    $(window).on('load', function(event) {
+
+    $(window).on('load', function (event) {
         $('.preloader').delay(500).fadeOut(500);
     });
-    
-    
+
+
     //===== Sticky
 
     $(window).on('scroll', function (event) {
@@ -22,7 +22,7 @@ $(function() {
         }
     });
 
-    
+
     //===== Section Menu Active
 
     var scrollLink = $('.page-scroll');
@@ -40,8 +40,8 @@ $(function() {
             }
         });
     });
-    
-    
+
+
     //===== close navbar-collapse when a  clicked
 
     $(".navbar-nav a").on('click', function () {
@@ -55,8 +55,8 @@ $(function() {
     $(".navbar-nav a").on('click', function () {
         $(".navbar-toggler").removeClass('active');
     });
-    
-    
+
+
     //===== Sidebar
 
     $('[href="#side-menu-left"], .overlay-left').on('click', function (event) {
@@ -66,48 +66,83 @@ $(function() {
     $('[href="#close"], .overlay-left').on('click', function (event) {
         $('.sidebar-left, .overlay-left').removeClass('open');
     });
-    
-    
-    
+
+
     //===== Back to top
-    
+
     // Show or hide the sticky footer button
-    $(window).on('scroll', function(event) {
-        if($(this).scrollTop() > 600){
+    $(window).on('scroll', function (event) {
+        if ($(this).scrollTop() > 600) {
             $('.back-to-top').fadeIn(200)
-        } else{
+        } else {
             $('.back-to-top').fadeOut(200)
         }
     });
-    
-    
+
+
     //Animate the scroll to yop
-    $('.back-to-top').on('click', function(event) {
+    $('.back-to-top').on('click', function (event) {
         event.preventDefault();
-        
+
         $('html, body').animate({
             scrollTop: 0,
         }, 1500);
     });
 
-    $('.js-cek-jadwal').click(function() {
+    $('.js-cek-jadwal').click(function () {
         var nik = $(this).closest('form').find('input[name="nik"]').val();
-        console.log(nik)
-        $.post('/api-cek-jadwal', {
-                nik: nik
-            }).done(function(response) {
-                if (response.success) {
-                    var template = $('#check-result-template').html()
-                    var rendered = Mustache.render(template, response.peserta);
-                    $('.js-result-card').html(rendered);
+        var isValid = NusantaraValid.isValidNIK(nik)
+
+        if (!isValid) {
+            $.alert({
+                columnClass: 'col-md-4 col-md-offset-4',
+                title: 'Hasil Pengecekan',
+                content: "NIK yang anda masukkan tidak valid",
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    close: function () {
+                    }
                 }
-            }).fail(function(response) {
-                console.log(response)
             });
+            return false;
+        }
+        $.post('/api-cek-jadwal', {
+            nik: nik
+        }).done(function (response) {
+            if (response.success) {
+                var template = $('#check-result-template').html()
+                var rendered = Mustache.render(template, response.peserta);
+                $('.js-result-card').html(rendered);
+            } else {
+                $.alert({
+                    columnClass: 'col-md-4 col-md-offset-4',
+                    title: 'Hasil Pengecekan',
+                    content: "Data NIK yang anda masukkan tidak ditemukan",
+                    type: 'red',
+                    typeAnimated: true,
+                    buttons: {
+                        close: function () {
+                        }
+                    }
+                });
+            }
+        }).fail(function (response) {
+            console.log(response)
+        });
     })
 
-    $(document).on('click', '.js-result-close', function() {
+    $('form .js-cek-jadwal-input').keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault()
+            $('.js-result-close').click()
+            $('.js-cek-jadwal').click()
+        }
+    });
+
+
+    $(document).on('click', '.js-result-close', function () {
         $(this).closest('.js-result-card').empty();
     })
-    
+
 });
