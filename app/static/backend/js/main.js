@@ -40,8 +40,12 @@
                             ' <a href="/backend/registrasi/edit/' + parseInt(row.id) + '" class="btn btn-sm btn-info m-1">Edit</a>' +
                             ' <button data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi/hapus/' + parseInt(row.id) + '" class="btn btn-sm btn-danger m-1 js-hapus-peserta">Hapus</button>' +
                             '</div>'
+                         var template_hadir = '<div>' +
+                            ' <a href="/backend/registrasi/edit/' + parseInt(row.id) + '" class="btn btn-sm btn-info m-1">Edit</a>' +
+                            ' <button data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi/hapus/' + parseInt(row.id) + '" class="btn btn-sm btn-danger m-1 js-hapus-peserta">Hapus</button>' +
+                            '</div>'
                         if (row.hadir == true) {
-                            return "-"
+                            return template_hadir
                         } else {
                             return template;
                         }

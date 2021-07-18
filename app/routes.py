@@ -126,6 +126,7 @@ def simpan_peserta():
         peserta.nama_kota = form.nama_kota.data
         peserta.penyelenggara = form.penyelenggara.data
         peserta.hadir = form.hadir.data
+        peserta.waktu_vaksin = form.waktu_vaksin.data
         db.session.add(peserta)
         db.session.commit()
         return redirect(url_for('registrasi'))
