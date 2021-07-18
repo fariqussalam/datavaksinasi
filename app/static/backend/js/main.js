@@ -1,7 +1,6 @@
 (function ($) {
     "use strict";
 
-    // Add active state to sidbar nav links
     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
     $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function () {
         if (this.href === path) {
@@ -38,6 +37,8 @@
                     "render": function (data, type, row, meta) {
                         var template = '<div>' +
                             '<button type="button" data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi-kehadiran/' + parseInt(row.id) + '" class="btn btn-sm btn-primary js-tandai-kehadiran">Tandai Kehadiran</button>' +
+                            ' <a href="/backend/registrasi/edit/' + parseInt(row.id) + '" class="btn btn-sm btn-info m-1">Edit</a>' +
+                            ' <button data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi/hapus/' + parseInt(row.id) + '" class="btn btn-sm btn-danger m-1 js-hapus-peserta">Hapus</button>' +
                             '</div>'
                         if (row.hadir == true) {
                             return "-"
@@ -73,6 +74,22 @@
         $.confirm({
             title: 'Konfirmasi',
             content: 'Yakin Ingin Menandai Kehadiran ' + nama + " (NIK : " + nik + ") ?",
+            buttons: {
+                confirm: function () {
+                    window.location.href = url
+                },
+                cancel: function () {}
+            }
+        });
+    })
+
+      $(document).on('click', '.js-hapus-peserta', function () {
+        var nama = $(this).data("nama")
+        var nik = $(this).data("nik")
+        var url = $(this).data("url")
+        $.confirm({
+            title: 'Konfirmasi',
+            content: 'Yakin Ingin Menghapus Data Peserta ' + nama + " (NIK : " + nik + ") ?",
             buttons: {
                 confirm: function () {
                     window.location.href = url

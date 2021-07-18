@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
-    TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
+from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, \
     Length
 from app.models import User
@@ -46,3 +46,22 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+
+class PesertaForm(FlaskForm):
+    id = HiddenField("ID")
+    nama = StringField('Nama', validators=[DataRequired()])
+    nik = StringField('NIK', validators=[DataRequired()])
+    alamat = StringField('Alamat KTP')
+    no_hp = StringField('No Telepon')
+    batch = SelectField("Batch", choices=[("BATCH 1", "BATCH 1"), ("BATCH 2", "BATCH 2"), ("BATCH 3", "BATCH 3"), ("BATCH 4", "BATCH 4")])
+    jenis_kelamin = SelectField("Jenis Kelamin", choices=[("Laki-Laki", "Laki-Laki"), ("Perempuan", "Perempuan")])
+    tanggal_lahir = StringField('Tanggal Lahir')
+    umur = StringField('Umur')
+    instansi_pekerjaan = StringField('Instansi Pekerjaan')
+    jenis_pekerjaan = StringField('Jenis Pekerjaan')
+    kode_kabupaten = StringField('Kode Kabupaten/Kota')
+    nama_kota = StringField('Nama Kabupaten/Kota')
+    waktu_vaksin = StringField('Hari / Tanggal Vaksin')
+    penyelenggara = SelectField('Instansi Penyelenggara', choices=[("BNI", "BNI"), ("BRI", "BRI"), ("Mandiri", "Mandiri"), ("BCA", "BCA"), ("CIMB Niaga", "CIMB Niaga"), ("Lainnya", "Lainnya")])
+    hadir = BooleanField("Kehadiran")

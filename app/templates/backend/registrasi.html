@@ -28,6 +28,10 @@
                 <div class="card-header">
                     <i class="fas fa-table mr-1"></i>
                     Daftar Peserta
+                    <a href="{{ url_for('tambah_peserta') }}" class="btn btn-primary float-right">
+                        <i class="fas fa-plus"></i>
+                        Tambah Peserta
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -39,7 +43,6 @@
                                 <th>Alamat</th>
                                 <th>No Telepon</th>
                                 <th>Batch</th>
-{#                                <th>Tanggal Vaksin</th>#}
                                 <th>Kehadiran</th>
                                 <th>Aksi</th>
                             </tr>

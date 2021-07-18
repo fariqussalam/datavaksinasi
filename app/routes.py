@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PesertaForm
 from app.models import User, PesertaVaksinasi, requires_roles, Batch
 
 
@@ -80,7 +80,6 @@ def backend():
         return redirect("/")
 
 
-
 @app.route('/backend/registrasi')
 @login_required
 @requires_roles('registration')
@@ -95,19 +94,86 @@ def registrasi():
                            total_peserta_hadir=total_peserta_hadir)
 
 
+@app.route('/backend/registrasi/tambah')
+@login_required
+@requires_roles('registration')
+def tambah_peserta():
+    form = PesertaForm()
+    return render_template('backend/tambah_peserta.html', form=form)
+
+
+@app.route('/backend/registrasi/simpan', methods=["POST"])
+@login_required
+@requires_roles('registration')
+def simpan_peserta():
+    form = PesertaForm()
+    if form.validate_on_submit():
+        if form.id.data:
+            peserta = PesertaVaksinasi.query.get(form.id.data)
+        else:
+            peserta = PesertaVaksinasi()
+        peserta.nama_lengkap = form.nama.data
+        peserta.nik = form.nik.data
+        peserta.alamat_ktp = form.alamat.data
+        peserta.no_hp = form.no_hp.data
+        peserta.batch = form.batch.data
+        peserta.jenis_kelamin = form.jenis_kelamin.data
+        peserta.tanggal_lahir = form.tanggal_lahir.data
+        peserta.umur = form.umur.data
+        peserta.instansi_pekerjaan = form.instansi_pekerjaan.data
+        peserta.jenis_pekerjaan = form.jenis_pekerjaan.data
+        peserta.kode_kabupaten = form.kode_kabupaten.data
+        peserta.nama_kota = form.nama_kota.data
+        peserta.penyelenggara = form.penyelenggara.data
+        peserta.hadir = form.hadir.data
+        db.session.add(peserta)
+        db.session.commit()
+        return redirect(url_for('registrasi'))
+
+    return render_template('backend/tambah_peserta.html', form=form)
+
+
+@app.route('/backend/registrasi/edit/<id>')
+@login_required
+@requires_roles('registration')
+def edit_peserta(id):
+    peserta = PesertaVaksinasi.query.get(id)
+    if peserta is None:
+        return redirect(url_for('registrasi'))
+
+    form = PesertaForm(obj=peserta)
+    form.nama.data = peserta.nama_lengkap
+    form.alamat.data = peserta.alamat_ktp
+    form.jenis_pekerjaan.data = peserta.jenis_pekerjaan
+    return render_template('backend/tambah_peserta.html', form=form, mode="edit")
+
+
+@app.route('/backend/registrasi/hapus/<id>')
+@login_required
+@requires_roles('registration')
+def hapus_peserta(id):
+    peserta = PesertaVaksinasi.query.get(id)
+    if peserta is None:
+        return redirect(url_for('registrasi'))
+
+    db.session.delete(peserta)
+    db.session.commit()
+    return redirect(url_for('registrasi'))
+
+
 @app.route('/backend/daftar-peserta')
 @login_required
 @requires_roles('watcher')
 def daftar_peserta():
     unit_kerja = "%{}%".format(current_user.unit_kerja)
     total_peserta = PesertaVaksinasi.query.filter(PesertaVaksinasi.penyelenggara.like(unit_kerja)).count()
-    total_peserta_hadir = PesertaVaksinasi.query.filter(PesertaVaksinasi.hadir == True, PesertaVaksinasi.penyelenggara.like(unit_kerja)).count()
+    total_peserta_hadir = PesertaVaksinasi.query.filter(PesertaVaksinasi.hadir == True,
+                                                        PesertaVaksinasi.penyelenggara.like(unit_kerja)).count()
     total_peserta_belum_hadir = total_peserta - total_peserta_hadir
     return render_template('backend/daftar_peserta.html',
                            total_peserta=total_peserta,
                            total_peserta_belum_hadir=total_peserta_belum_hadir,
                            total_peserta_hadir=total_peserta_hadir)
-
 
 
 @app.route('/backend/registrasi-kehadiran/<id>')
@@ -116,12 +182,10 @@ def daftar_peserta():
 def registrasi_kehadiran(id):
     peserta = PesertaVaksinasi.query.get(id)
     if peserta is None:
-        # flash("Peserta Tidak Ditemukan")
         return redirect(url_for('registrasi'))
 
     peserta.hadir = True
     db.session.commit()
-    # flash("Registrasi Kehadiran Peserta Berhasil")
     return redirect(url_for('registrasi'))
 
 

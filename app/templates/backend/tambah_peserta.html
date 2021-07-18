@@ -1,0 +1,81 @@
+{% extends "backend.html" %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Tambah Peserta</h1>
+            <div class="card mb-4">
+                <div class="card-header">
+                    Formulir Peserta
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('simpan_peserta') }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.nama.label }}
+                            {{ form.nama(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.nik.label }}
+                            {{ form.nik(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.alamat.label }}
+                            {{ form.alamat(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.no_hp.label }}
+                            {{ form.no_hp(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.batch.label }}
+                            {{ form.batch(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.jenis_kelamin.label }}
+                            {{ form.jenis_kelamin(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.tanggal_lahir.label }}
+                            {{ form.tanggal_lahir(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.umur.label }}
+                            {{ form.umur(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.instansi_pekerjaan.label }}
+                            {{ form.instansi_pekerjaan(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.jenis_pekerjaan.label }}
+                            {{ form.jenis_pekerjaan(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.kode_kabupaten.label }}
+                            {{ form.kode_kabupaten(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.nama_kota.label }}
+                            {{ form.nama_kota(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.waktu_vaksin.label }}
+                            {{ form.waktu_vaksin(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.penyelenggara.label }}
+                            {{ form.penyelenggara(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>{{ form.hadir }} Telah Hadir Vaksin</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary float-right">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
