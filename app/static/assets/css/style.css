@@ -2226,6 +2226,9 @@ p {
     .navbar-area .navbar .navbar-nav .nav-item {
       margin: 0 16px;
       position: relative; }
+     .navbar-area .navbar .navbar-brand {
+       color: #fff;
+     }
       .navbar-area .navbar .navbar-nav .nav-item a {
         font-size: 16px;
         line-height: 24px;
@@ -2341,6 +2344,9 @@ p {
     .navbar-area.sticky .navbar .navbar-nav .nav-item a {
       color: #121212;
       opacity: 0.7; }
+        .navbar-area.sticky .navbar .navbar-brand {
+      color: #121212;
+      opacity: 0.7; }
       .navbar-area.sticky .navbar .navbar-nav .nav-item a::before {
         background: -webkit-linear-gradient(left, rgba(18, 18, 18, 0) 0%, #121212 100%);
         background: -o-linear-gradient(left, rgba(18, 18, 18, 0) 0%, #121212 100%);
@@ -2360,16 +2366,16 @@ p {
        10.SLIDER css 
 ===========================*/
 .carousel-item {
-  background-color: #0067f4;
+  background-color: #c82828;
   position: relative; }
   .carousel-item::before {
     position: absolute;
     content: '';
     width: 33%;
     height: 100%;
-    background: -webkit-linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);
-    background: -o-linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);
-    background: linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);
+    /*background: -webkit-linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);*/
+    /*background: -o-linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);*/
+    /*background: linear-gradient(rgba(0, 103, 244, 0.3) 0%, rgba(43, 219, 220, 0.3) 100%);*/
     top: 0;
     right: 15%;
     -webkit-transform: skewX(20deg);
