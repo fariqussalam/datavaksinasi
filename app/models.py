@@ -81,6 +81,7 @@ class PesertaVaksinasi(db.Model):
     umur = db.Column(db.Integer)
     penyelenggara = db.Column(db.String(140))
     waktu_vaksin = db.Column(db.String(140))
+    sudah_vaksin = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '<PesertaVaksinasi {}>'.format(self.nik)

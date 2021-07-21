@@ -29,10 +29,12 @@
                 {"data": "batch"},
                 // { "data": "hari_vaksin" },
                 {"data": "peserta_hadir"},
+                {"data": "sudah_vaksin"},
+                {"data": "penyelenggara"},
             ],
             "columnDefs": [
                 {
-                    "targets": 6,
+                    "targets": 8,
                     "data": "hadir",
                     "render": function (data, type, row, meta) {
                         var template = '<div>' +

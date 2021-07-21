@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PesertaForm
+from app.forms import LoginForm, PesertaForm
 from app.models import User, PesertaVaksinasi, requires_roles, Batch
 
 
@@ -127,6 +127,7 @@ def simpan_peserta():
         peserta.penyelenggara = form.penyelenggara.data
         peserta.hadir = form.hadir.data
         peserta.waktu_vaksin = form.waktu_vaksin.data
+        peserta.sudah_vaksin = form.sudah_vaksin.data
         db.session.add(peserta)
         db.session.commit()
         return redirect(url_for('registrasi'))
@@ -204,6 +205,11 @@ def api_daftar_peserta():
             peserta_hadir = "Sudah Hadir"
         else:
             peserta_hadir = "Belum Hadir"
+
+        if peserta.sudah_vaksin:
+            sudah_vaksin = "Sudah Vaksin"
+        else:
+            sudah_vaksin = "Belum Vaksin"
         responseList.append({
             "id": peserta.id,
             "nik": peserta.nik,
@@ -213,6 +219,8 @@ def api_daftar_peserta():
             "batch": peserta.batch,
             "hari_vaksin": peserta.waktu_vaksin,
             "hadir": peserta.hadir,
-            "peserta_hadir": peserta_hadir
+            "peserta_hadir": peserta_hadir,
+            "sudah_vaksin": sudah_vaksin,
+            "penyelenggara": peserta.penyelenggara
         })
     return jsonify({"data": responseList})

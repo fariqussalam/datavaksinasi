@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
-from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, \
     Length
 from app.models import User
@@ -63,5 +62,6 @@ class PesertaForm(FlaskForm):
     kode_kabupaten = StringField('Kode Kabupaten/Kota')
     nama_kota = StringField('Nama Kabupaten/Kota')
     waktu_vaksin = StringField('Hari / Tanggal Vaksin')
-    penyelenggara = SelectField('Instansi Penyelenggara', choices=[("BNI", "BNI"), ("BRI", "BRI"), ("Mandiri", "Mandiri"), ("BCA", "BCA"), ("CIMB Niaga", "CIMB Niaga"), ("Lainnya", "Lainnya")])
+    penyelenggara = SelectField('Instansi Penyelenggara', choices=[("BNI", "BNI"), ("BRI", "BRI"), ("Mandiri", "Mandiri"), ("BCA", "BCA"), ("CIMB Niaga", "CIMB Niaga"), ("OJK", "OJK"), ("UGM", "UGM") , ("Lainnya", "Lainnya")])
     hadir = BooleanField("Kehadiran")
+    sudah_vaksin = BooleanField("Sudah Vaksin")
