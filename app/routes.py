@@ -87,11 +87,13 @@ def registrasi():
     total_peserta = PesertaVaksinasi.query.count()
     total_peserta_hadir = PesertaVaksinasi.query.filter(PesertaVaksinasi.hadir == True).count()
     total_peserta_belum_hadir = total_peserta - total_peserta_hadir
+    total_peserta_sudah_vaksin = PesertaVaksinasi.query.filter(PesertaVaksinasi.sudah_vaksin == True).count()
 
     return render_template('backend/registrasi.html',
                            total_peserta=total_peserta,
                            total_peserta_belum_hadir=total_peserta_belum_hadir,
-                           total_peserta_hadir=total_peserta_hadir)
+                           total_peserta_hadir=total_peserta_hadir,
+                           total_peserta_sudah_vaksin=total_peserta_sudah_vaksin)
 
 
 @app.route('/backend/registrasi/tambah')
@@ -172,10 +174,14 @@ def daftar_peserta():
     total_peserta_hadir = PesertaVaksinasi.query.filter(PesertaVaksinasi.hadir == True,
                                                         PesertaVaksinasi.penyelenggara.like(unit_kerja)).count()
     total_peserta_belum_hadir = total_peserta - total_peserta_hadir
+    total_peserta_sudah_vaksin = PesertaVaksinasi.query.filter(PesertaVaksinasi.sudah_vaksin == True,
+                                                        PesertaVaksinasi.penyelenggara.like(unit_kerja)).count()
+
     return render_template('backend/daftar_peserta.html',
                            total_peserta=total_peserta,
                            total_peserta_belum_hadir=total_peserta_belum_hadir,
-                           total_peserta_hadir=total_peserta_hadir)
+                           total_peserta_hadir=total_peserta_hadir,
+                           total_peserta_sudah_vaksin=total_peserta_sudah_vaksin)
 
 
 @app.route('/backend/registrasi-kehadiran/<id>')
@@ -187,6 +193,19 @@ def registrasi_kehadiran(id):
         return redirect(url_for('registrasi'))
 
     peserta.hadir = True
+    db.session.commit()
+    return redirect(url_for('registrasi'))
+
+
+@app.route('/backend/registrasi-sudah-vaksin/<id>')
+@login_required
+@requires_roles('registration')
+def registrasi_sudah_vaksin(id):
+    peserta = PesertaVaksinasi.query.get(id)
+    if peserta is None:
+        return redirect(url_for('registrasi'))
+
+    peserta.sudah_vaksin = True
     db.session.commit()
     return redirect(url_for('registrasi'))
 
@@ -220,6 +239,7 @@ def api_daftar_peserta():
             "hari_vaksin": peserta.waktu_vaksin,
             "hadir": peserta.hadir,
             "peserta_hadir": peserta_hadir,
+            "is_sudah_vaksin": peserta.sudah_vaksin,
             "sudah_vaksin": sudah_vaksin,
             "penyelenggara": peserta.penyelenggara
         })

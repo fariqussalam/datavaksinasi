@@ -33,24 +33,31 @@
                 {"data": "penyelenggara"},
             ],
             "columnDefs": [
-                {
+                  {
                     "targets": 8,
+                    "data": "sudah_vaksin",
+                    "render": function (data, type, row, meta) {
+                        var template = '<div>'
+                        if (row.hadir != true) {
+                            template += '<button type="button" data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi-kehadiran/' + parseInt(row.id) + '" class="btn btn-sm btn-primary js-tandai-kehadiran m-1">Tandai Kehadiran</button>'
+                        }
+                        if (row.is_sudah_vaksin != true) {
+                            template += '<button type="button" data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi-sudah-vaksin/' + parseInt(row.id) + '" class="btn btn-sm btn-success js-tandai-sudah-vaksin m-1">Tandai Sudah Vaksin</button>'
+                        }
+                        template += "</div>"
+                        return template;
+
+                    }
+                },
+                {
+                    "targets": 9,
                     "data": "hadir",
                     "render": function (data, type, row, meta) {
-                        var template = '<div>' +
-                            '<button type="button" data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi-kehadiran/' + parseInt(row.id) + '" class="btn btn-sm btn-primary js-tandai-kehadiran">Tandai Kehadiran</button>' +
-                            ' <a href="/backend/registrasi/edit/' + parseInt(row.id) + '" class="btn btn-sm btn-info m-1">Edit</a>' +
-                            ' <button data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi/hapus/' + parseInt(row.id) + '" class="btn btn-sm btn-danger m-1 js-hapus-peserta">Hapus</button>' +
-                            '</div>'
                          var template_hadir = '<div>' +
                             ' <a href="/backend/registrasi/edit/' + parseInt(row.id) + '" class="btn btn-sm btn-info m-1">Edit</a>' +
                             ' <button data-nik="' + row.nik + '" data-nama="' + row.nama_lengkap + '" data-url="/backend/registrasi/hapus/' + parseInt(row.id) + '" class="btn btn-sm btn-danger m-1 js-hapus-peserta">Hapus</button>' +
                             '</div>'
-                        if (row.hadir == true) {
-                            return template_hadir
-                        } else {
-                            return template;
-                        }
+                        return template_hadir
                     }
                 }
             ]
@@ -69,6 +76,7 @@
                 {"data": "batch"},
                 // { "data": "hari_vaksin" },
                 {"data": "peserta_hadir"},
+                {"data": "sudah_vaksin"},
             ]
         })
     });
@@ -80,6 +88,22 @@
         $.confirm({
             title: 'Konfirmasi',
             content: 'Yakin Ingin Menandai Kehadiran ' + nama + " (NIK : " + nik + ") ?",
+            buttons: {
+                confirm: function () {
+                    window.location.href = url
+                },
+                cancel: function () {}
+            }
+        });
+    })
+
+    $(document).on('click', '.js-tandai-sudah-vaksin', function () {
+        var nama = $(this).data("nama")
+        var nik = $(this).data("nik")
+        var url = $(this).data("url")
+        $.confirm({
+            title: 'Konfirmasi',
+            content: 'Yakin Ingin Menandai Vaksinasi ' + nama + " (NIK : " + nik + ") ?",
             buttons: {
                 confirm: function () {
                     window.location.href = url

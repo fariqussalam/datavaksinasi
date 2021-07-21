@@ -7,7 +7,7 @@
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Daftar Peserta <b>{{ current_user.unit_kerja }}</b></li>
             </ol>
-             <div class="row">
+            <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-primary text-white mb-4">
                         <div class="card-body">Jumlah Total Peserta : <b>{{ total_peserta }}</b></div>
@@ -21,6 +21,11 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-danger text-white mb-4">
                         <div class="card-body">Peserta Belum Hadir : <b>{{ total_peserta_belum_hadir }}</b></div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Peserta Sudah Vaksin : <b>{{ total_peserta_sudah_vaksin }}</b></div>
                     </div>
                 </div>
             </div>
@@ -39,9 +44,10 @@
                                 <th>Alamat</th>
                                 <th>No Telepon</th>
                                 <th>Batch</th>
-{#                                <th>Tanggal Vaksin</th>#}
+                                {#                                <th>Tanggal Vaksin</th>#}
                                 <th>Kehadiran</th>
-{#                                <th>Aksi</th>#}
+                                <th>Sudah Vaksin</th>
+                                {#                                <th>Aksi</th>#}
                             </tr>
                             </thead>
                             <tbody></tbody>
